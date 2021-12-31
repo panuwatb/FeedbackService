@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using FeedbackService.Core.Services;
 using FeedbackService.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
+using FeedbackService.Api;
 
 namespace FeedbackService
 {
@@ -32,16 +33,17 @@ namespace FeedbackService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Configure Cors.
+            services.ConfigureCors();
+
+            // Configure Dependency Injection.
+            services.ConfigureDependencyInjection(Configuration);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FeedbackService", Version = "v1" });
             });
-
-            services.AddDbContext<FeedbackDbContext>(opt => opt.UseInMemoryDatabase("InMem"));
-            services.AddScoped<IFeedbackService, FeedbacksService>();
-            services.AddScoped<IFeedbackRepository, FeedbackRepository>();
 
             // Configure Automapper.
             services.AddAutoMapper(typeof(Startup));
