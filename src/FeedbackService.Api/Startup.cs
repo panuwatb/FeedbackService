@@ -1,3 +1,6 @@
+using FeedbackService.Core.Interfaces.Repositories;
+using FeedbackService.Core.Interfaces.Services;
+using FeedbackService.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,6 +14,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FeedbackService.Core.Services;
+using FeedbackService.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace FeedbackService
 {
@@ -32,7 +38,15 @@ namespace FeedbackService
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FeedbackService", Version = "v1" });
             });
+
+            services.AddDbContext<FeedbackDbContext>(opt => opt.UseInMemoryDatabase("InMem"));
+            services.AddScoped<IFeedbackService, FeedbacksService>();
+            services.AddScoped<IFeedbackRepository, FeedbackRepository>();
+
+            // Configure Automapper.
+            services.AddAutoMapper(typeof(Startup));
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
