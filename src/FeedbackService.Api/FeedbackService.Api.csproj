@@ -17,4 +17,9 @@
     <Folder Include="V2\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FeedbackService.Core\FeedbackService.Core.csproj" />
+    <ProjectReference Include="..\FeedbackService.Infrastructure\FeedbackService.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

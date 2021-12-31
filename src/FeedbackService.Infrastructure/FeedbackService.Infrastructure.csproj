@@ -10,5 +10,15 @@
     <Folder Include="Mapper\" />
     <Folder Include="Repositories\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FeedbackService.Core\FeedbackService.Core.csproj" />
+  </ItemGroup>
 	
 </Project>
