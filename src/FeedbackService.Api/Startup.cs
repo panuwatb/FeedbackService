@@ -40,10 +40,9 @@ namespace FeedbackService
             services.ConfigureDependencyInjection(Configuration);
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "FeedbackService", Version = "v1" });
-            });
+
+            // Configure swagger
+            services.ConfigureSwagger();
 
             // Configure Automapper.
             services.AddAutoMapper(typeof(Startup));
@@ -55,10 +54,10 @@ namespace FeedbackService
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FeedbackService v1"));
+                app.UseDeveloperExceptionPage();                
             }
+
+            app.ConfigureSwagger();
 
             app.UseHttpsRedirection();
 
