@@ -18,6 +18,7 @@ using FeedbackService.Core.Services;
 using FeedbackService.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using FeedbackService.Api;
+using FeedbackService.Api.Midlewares;
 
 namespace FeedbackService
 {
@@ -56,7 +57,13 @@ namespace FeedbackService
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();                
+                // app.UseDeveloperExceptionPage();
+                app.UseHttpCodeAndLogMiddleware();
+            }
+            else
+            {
+                app.UseHttpCodeAndLogMiddleware();
+                app.UseHsts();
             }
 
             app.ConfigureSwagger();
