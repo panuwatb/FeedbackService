@@ -11,10 +11,10 @@ namespace FeedbackService.Api.V1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FeedbackController : ControllerBase
+    public class FeedbacksController : ControllerBase
     {
         private readonly IFeedbackService _feedbackService;
-        public FeedbackController(IFeedbackService feedbackService)
+        public FeedbacksController(IFeedbackService feedbackService)
         {
             _feedbackService = feedbackService ?? throw new ArgumentNullException(nameof(feedbackService));
         }
@@ -28,7 +28,7 @@ namespace FeedbackService.Api.V1.Controllers
         /// </remarks>        
         [HttpGet]
         //[SwaggerOperation("GetFeedbacks")]
-        [Route("Getfeedbacks")]
+        //[Route("Getfeedbacks")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

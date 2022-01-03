@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NLog;
+using NLog.Extensions.Logging;
+using NLog.Web;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,20 +27,24 @@ namespace FeedbackService.Api
                 configBuilder.AddJsonFile($"appsettings.{currentEnvironment}.json", optional: false);
             }
 
+            IConfigurationRoot config= configBuilder.Build();
+            LogManager.Configuration = new NLogLoggingConfiguration(config.GetSection("NLog"));
+            Logger logger = LogManager.GetCurrentClassLogger();
+
             try
             {
-                //logger.Info($"{ApiConstants.FriendlyServiceName} starts running...");
+                logger.Info($"{ApiConstants.FriendlyServiceName} starts running...");
                 CreateWebHostBuilder(args).Build().Run();
-                //logger.Info($"{ApiConstants.FriendlyServiceName} is stopped");
+                logger.Info($"{ApiConstants.FriendlyServiceName} is stopped");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //logger.Error(exception);
+                logger.Error(ex);
                 throw;
             }
             finally
             {
-                //LogManager.Shutdown();
+                LogManager.Shutdown();
             }
 
         }
@@ -47,6 +54,12 @@ namespace FeedbackService.Api
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                })
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+                })
+                .UseNLog();
     }
 }

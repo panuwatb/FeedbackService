@@ -46,6 +46,8 @@ namespace FeedbackService
 
             // Configure Automapper.
             services.AddAutoMapper(typeof(Startup));
+
+            services.AddRouting(options => options.LowercaseUrls = true);
         }
 
 
