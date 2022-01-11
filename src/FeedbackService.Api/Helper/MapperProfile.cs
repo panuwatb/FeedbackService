@@ -6,7 +6,7 @@ namespace FeedbackService.Api.Helper
     {
         public MapperProfile()
         {
-            CreateMap<Infrastructure.Entities.Feedback, Core.Models.Feedback>();
+            CreateMap<Infrastructure.Entities.Feedback, Core.Models.Feedback>().ReverseMap();
         }
     }
 }

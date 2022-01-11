@@ -11,7 +11,8 @@ namespace FeedbackService.Core.Interfaces.Services
     {
         Task<IEnumerable<Feedback>> GetAllFeedbacks();
         Task<Feedback> GetFeedbackById(int id);
-        Task<bool> CreateFeedback(Feedback feedback);
+        Task<Feedback> CreateFeedback(Feedback feedback);
         Task<bool> DeleteFeedback(int id);
+        Task<bool> UpdateFeedback(int id, Feedback feedback);
     }
 }

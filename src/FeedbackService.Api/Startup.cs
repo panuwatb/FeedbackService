@@ -19,6 +19,7 @@ using FeedbackService.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using FeedbackService.Api;
 using FeedbackService.Api.Midlewares;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace FeedbackService
 {
@@ -53,7 +54,7 @@ namespace FeedbackService
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
             {
@@ -66,7 +67,7 @@ namespace FeedbackService
                 app.UseHsts();
             }
 
-            app.ConfigureSwagger();
+            app.ConfigureSwagger(provider);
 
             app.UseHttpsRedirection();
 

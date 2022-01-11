@@ -24,7 +24,27 @@ namespace FeedbackService.Api
                 throw new ArgumentNullException(nameof(configuration));
             }
 
-            services.AddDbContext<FeedbackDbContext>(opt => opt.UseInMemoryDatabase("InMem"));
+            var appSettings = configuration.GetSection("AppSettings").Get<AppSettings>();
+
+            string feedbackDbConnectionString = string.Empty;
+            if (!(bool)(appSettings?.ByPassKeyVault)) // use for localhost
+            {
+                feedbackDbConnectionString = configuration.GetConnectionString("feedback");
+            }
+            else // used is environment
+            {
+                feedbackDbConnectionString = GetSecret.FeedbackDbConnectionString().Result;
+            }
+
+            // FeedbackDbContext database
+            services.AddDbContext<FeedbackDbContext>(
+            optionsAction: options => options.UseSqlServer(feedbackDbConnectionString),
+            contextLifetime: ServiceLifetime.Transient,
+            optionsLifetime: ServiceLifetime.Transient
+            );
+
+
+            //services.AddDbContext<FeedbackDbContext>(opt => opt.UseInMemoryDatabase("InMem"));
             services.AddScoped<IFeedbackService, FeedbacksService>();
             services.AddScoped<IFeedbackRepository, FeedbackRepository>();
 

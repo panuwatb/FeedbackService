@@ -20,21 +20,36 @@ namespace FeedbackService.Core.Services
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task<bool> CreateFeedback(Feedback feedback)
+        public async Task<Feedback> CreateFeedback(Feedback feedback)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await _feedbackRepository.CreateFeedback(feedback);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error while trying to call CreateFeedback in service class, Error Message = {ex}.");
+                throw;
+            }
         }
 
         public async Task<bool> DeleteFeedback(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await _feedbackRepository.DeleteFeedback(id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error while trying to call DeleteFeedback in service class, Error Message = {ex}.");
+                throw;
+            }
         }
 
         public async Task<IEnumerable<Feedback>> GetAllFeedbacks()
         {
             try
-            {
-                throw new ArgumentNullException();
+            {                
                 return await _feedbackRepository.GetAllFeedbacks();
             }
             catch (Exception ex)
@@ -46,7 +61,28 @@ namespace FeedbackService.Core.Services
 
         public async Task<Feedback> GetFeedbackById(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await _feedbackRepository.GetFeedbackById(id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error while trying to call GetFeedbackById in service class, Error Message = {ex}.");
+                throw;
+            }
+        }
+
+        public async Task<bool> UpdateFeedback(int id, Feedback feedback)
+        {
+            try
+            {
+                return await _feedbackRepository.UpdateFeedback(id, feedback);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error while trying to call UpdateFeedback in service class, Error Message = {ex}.");
+                throw;
+            }
         }
     }
 }

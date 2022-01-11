@@ -20,7 +20,7 @@
     "FeedbackService": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "swagger",
+      "launchUrl": "swagger/feedbackservice",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
