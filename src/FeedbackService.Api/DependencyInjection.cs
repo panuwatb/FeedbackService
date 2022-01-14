@@ -3,6 +3,7 @@ using FeedbackService.Core.Interfaces.Services;
 using FeedbackService.Core.Services;
 using FeedbackService.Infrastructure.Context;
 using FeedbackService.Infrastructure.Repositories;
+using FeedbackService.Infrastructure.Shared.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -47,6 +48,7 @@ namespace FeedbackService.Api
             //services.AddDbContext<FeedbackDbContext>(opt => opt.UseInMemoryDatabase("InMem"));
             services.AddScoped<IFeedbackService, FeedbacksService>();
             services.AddScoped<IFeedbackRepository, FeedbackRepository>();
+            services.AddScoped<IDateTimeService, DateTimeService>();            
 
             return services;
         }

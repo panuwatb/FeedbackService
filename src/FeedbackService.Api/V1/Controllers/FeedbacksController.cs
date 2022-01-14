@@ -15,9 +15,13 @@ namespace FeedbackService.Api.V1.Controllers
     public class FeedbacksController : ControllerBase
     {
         private readonly IFeedbackService _feedbackService;
-        public FeedbacksController(IFeedbackService feedbackService)
+        private readonly IDateTimeService _dateTimeService;
+        private readonly ISCBApi _scbApi;
+        public FeedbacksController(IFeedbackService feedbackService, IDateTimeService dateTimeService, ISCBApi scbApi)
         {
             _feedbackService = feedbackService ?? throw new ArgumentNullException(nameof(feedbackService));
+            _dateTimeService = dateTimeService ?? throw new ArgumentNullException(nameof(dateTimeService));
+            _scbApi = scbApi;
         }
 
         /// <summary>
@@ -38,6 +42,7 @@ namespace FeedbackService.Api.V1.Controllers
         public async Task<ActionResult<IEnumerable<Feedback>>> GetFeedbacks()
         {
             var response = await _feedbackService.GetAllFeedbacks().ConfigureAwait(false);
+            var xxxx = await _scbApi.GetToken("xxx", "xxx");
             if (response == null)
             {
                 return NoContent();
@@ -143,7 +148,6 @@ namespace FeedbackService.Api.V1.Controllers
             }
 
             return await _feedbackService.UpdateFeedback(id, feedback).ConfigureAwait(false);            
-        }
-
+        }     
     }
 }
